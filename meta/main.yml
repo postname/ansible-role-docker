@@ -1,0 +1,12 @@
+galaxy_info:
+  author: postname
+  description: Een herbruikbare role voor het installeren van Docker en het toewijzen van gebruikersrechten.
+  company: Windesheim
+  license: MIT
+  min_ansible_version: 2.10
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+        - noble
+dependencies: []

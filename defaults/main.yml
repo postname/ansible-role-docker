@@ -1,0 +1,5 @@
+---
+# Standaard gebruikers die aan de docker groep worden toegevoegd
+docker_users:
+  - iac
+  - testuser
