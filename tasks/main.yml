@@ -4,18 +4,20 @@
     name:
       - ca-certificates
       - curl
+      - python3-debian  # Vereist voor de deb822_repository module
     state: present
     update_cache: true
 
-- name: Voeg Docker GPG key toe
-  ansible.builtin.get_url:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    dest: /etc/apt/keyrings/docker.asc
-    mode: '0644'
-
-- name: Voeg Docker repository toe
-  ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+- name: Voeg Docker repository toe (deb822 formaat)
+  ansible.builtin.deb822_repository:
+    name: docker
+    types: deb
+    uris: https://download.docker.com/linux/ubuntu
+    suites: "{{ ansible_distribution_release }}"
+    components: stable
+    architectures: amd64
+    # De module downloadt en installeert de GPG key nu automatisch vanaf deze URL!
+    signed_by: https://download.docker.com/linux/ubuntu/gpg
     state: present
 
 - name: Installeer Docker Engine
@@ -42,3 +44,4 @@
     append: true
   loop: "{{ docker_users }}"
   when: docker_users | length > 0
+  
