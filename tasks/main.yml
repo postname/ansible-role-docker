@@ -13,7 +13,7 @@
     name: docker
     types: deb
     uris: https://download.docker.com/linux/ubuntu
-    suites: "{{ ansible_distribution_release }}"
+    suites: "{{ ansible_facts['distribution_release'] }}"
     components: stable
     architectures: amd64
     # De module downloadt en installeert de GPG key nu automatisch vanaf deze URL!
@@ -44,4 +44,3 @@
     append: true
   loop: "{{ docker_users }}"
   when: docker_users | length > 0
-  
